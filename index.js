@@ -25,6 +25,8 @@ app.use("/proxy", (req, res, next) => {
     target: target,
     changeOrigin: true,
     onProxyReq: (proxyReq, req, res) => {
+      proxyReq.setHeader("User-Agent", "Mozilla/5.0"); // Set a User-Agent if required
+      proxyReq.setHeader("Origin", target); // Set Origin header to mimic the request origin
       console.log(`Proxying request to: ${target}${req.url}`);
     },
     onError: (err, req, res) => {
